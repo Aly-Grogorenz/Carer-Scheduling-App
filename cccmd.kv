@@ -1,0 +1,677 @@
+#:kivy 2.3.0
+#:import MapView kivy.garden.mapview.MapView
+
+
+WindowManager:
+    
+    FirstWindow: 
+    CarerWindow: 
+    ClientWindow:
+    
+    
+<FirstWindow>:
+    name: 'first'
+    
+    MDBoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+        md_bg_color: '#01579B'
+        
+        
+        MDBoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.75
+            
+            MDCard:
+                size_hint: (0.1/3, 0.8)
+                pos_hint: {"center_y": .5}
+                style: 'filled'
+                md_bg_color: '#01579B'
+            
+            
+            MDCard:
+                size_hint: (0.45, 0.8)
+                pos_hint: {"center_x": .25, "center_y": .5}
+                style: 'filled'
+                md_bg_color: '#81D4FA'
+                
+                MDBoxLayout:
+                    id: left_box
+                    orientation: 'vertical'
+                        
+                    MDLabel: 
+                        text: '1. Select Region'
+                        size_hint: 1, 0.2
+                        y: root.height*2/3
+                        halign: 'center'
+                            
+                    MDGridLayout:
+                        size_hint: 1, 0.8
+                        cols: 2
+                        y: root.y
+                            
+                        MDLabel:
+                            text: 'Falmouth'   
+                            halign: 'center'
+                        MDCheckbox:
+                            id: region_falmouth
+                            group: 'regions'
+                            active: True
+                            on_active: root.checkbox_click(self, self.active, 'Falmouth')
+                                
+                        MDLabel:
+                            text: 'Penryn'
+                            halign: 'center'
+                        MDCheckbox:
+                            id: region_penryn
+                            group: 'regions'
+                            on_active: root.checkbox_click(self, self.active, 'Penryn')
+                            
+                        MDLabel:
+                            text: 'Redruth'
+                            halign: 'center'
+                        MDCheckbox:
+                            id: region_redruth
+                            group: 'regions'
+                            on_active: root.checkbox_click(self, self.active, 'Redruth')
+                            
+                        MDLabel:
+                            text: 'Camborne'
+                            halign: 'center'
+                        MDCheckbox:
+                            id: region_camborne
+                            group: 'regions'
+                            on_active: root.checkbox_click(self, self.active, 'Camborne')
+            
+            MDCard:
+                size_hint: (0.1/3, 0.8)
+                pos_hint: {"center_y": .5}
+                style: 'filled'
+                md_bg_color: '#01579B'
+            
+            MDCard:
+                size_hint: (0.45, 0.8)  
+                pos_hint: {"center_x": .75, "center_y": .5}
+                style: 'filled' 
+                md_bg_color: '#81D4FA'    
+                    
+                MDBoxLayout:
+                    id: right_box
+                    orientation: 'vertical'
+                    
+                    MDCard:
+                        size_hint: (0.8, 0.1)
+                        center_x: 0.5
+                        style: 'filled' 
+                        md_bg_color: '#81D4FA'  
+                     
+                    MDFillRoundFlatButton: 
+                        size_hint: 0.8, 0.25
+                        pos_hint: {"center_x": .5, "center_y": .25}
+                        text: '2. Upload Data'
+                        font_size: 24
+                        on_release: 
+                            app.open_file_manager()
+                            label_status.text = 'Status: Ready to schedule'
+                        
+                        
+                        
+                    MDLabel:
+                        id: label_status
+                        size_hint: 0.8, 0.3
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        text: 'Status: Awaiting Data'
+                        halign: 'center'
+                        valign: 'center'
+                                   
+                        
+                    MDFillRoundFlatButton:
+                        size_hint: 0.8, 0.25
+                        pos_hint: {"center_x": .5, "center_y": .75}
+                        text: '3. Create Schedules'
+                        font_size: 24
+                        on_release: 
+                            label_status.text = 'Status: Scheduling in progress'
+                            root.run_program()
+                            label_status.text = 'Status: Scheduling complete'
+                    
+                    MDCard:
+                        size_hint: (0.8, 0.09)
+                        pos_hint: {"center_x": .5, "center_y": .99}
+                        style: 'filled' 
+                        md_bg_color: '#81D4FA'  
+                    
+            MDCard:
+                size_hint: (0.1/3, 0.8)
+                pos_hint: {"center_y": .5}
+                style: 'filled'
+                md_bg_color: '#01579B'
+            
+        
+        MDBoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.2  
+            
+            MDCard:
+                size_hint: (0.1/3, 1)
+                pos_hint: {"center_y": .5}
+                style: 'filled'
+                md_bg_color: '#01579B'  
+                
+            MDCard:
+                size_hint: (0.8, 1)
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                style: 'filled'  
+                md_bg_color: '#81D4FA'
+                  
+            
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                
+                    MDCard:
+                        size_hint: (0.1/3, 0.7)
+                        pos_hint: {"center_y": .5}
+                        style: 'filled'
+                        md_bg_color: '#81D4FA'
+        
+                    MDFillRoundFlatButton: 
+                        text: 'Go to Carer Overview'
+                        font_size: 24
+                        size_hint: 0.45, 0.7
+                        pos_hint: {'center_x': 0.25, 'center_y': 0.5}
+                        on_release: 
+                            root.manager.get_screen('carer_window').carer_select.values = app.carer_list
+                            app.root.current = 'carer_window'
+                            root.manager.transition.direction = 'up'
+                        
+                    MDCard:
+                        size_hint: (0.1/3, 0.7)
+                        pos_hint: {"center_y": .5}
+                        style: 'filled'
+                        md_bg_color: '#81D4FA'
+                    
+            
+                    MDFillRoundFlatButton:
+                        text: 'Go to Client Overview'
+                        font_size: 24
+                        size_hint: 0.45, 0.7
+                        pos_hint: {'center_x': 0.25, 'center_y': 0.5}
+                        on_release: 
+                            root.manager.get_screen('client_window').client_select.values = app.client_list
+                            app.root.current = 'client_window'
+                            root.manager.transition.direction = 'up'
+                
+                    MDCard:
+                        size_hint: (0.1/3, 0.7)
+                        pos_hint: {"center_y": .5}
+                        style: 'filled'
+                        md_bg_color: '#81D4FA'
+            
+            MDCard:
+                size_hint: (0.1/3, 1)
+                pos_hint: {"center_y": .5}
+                style: 'filled'
+                md_bg_color: '#01579B'
+                
+        MDBoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.05 
+             
+            MDCard:
+                style: 'filled'
+                md_bg_color: '#01579B'
+                    
+    
+    
+    
+<CarerWindow>:
+    name: 'carer_window'
+    id: carer_window
+    
+    name: 'carer_window'
+    carer_select: carer_select
+    instructions: instructions
+    table_box: table_box
+    map_box: map_box
+    new_start: new_start
+    new_end: new_end
+    new_workhours: new_workhours
+    label_reschedule: label_reschedule
+    
+    id: carer_window
+    
+    MDBoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+        md_bg_color: '#01579B'
+    
+        MDFloatLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.7
+        
+            MDFloatLayout:
+                orientation: 'vertical'
+                size_hint: 0.5, 0.9
+                pos_hint: {'center_x': 0.2625, 'center_y': 0.5}
+        
+                MDCard:
+                    id: instructions
+                    size_hint: (0.925, 1)
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    md_bg_color: '#81D4FA'
+                    
+                    TextInput:
+                        id: instructions_text
+                        text: 'Select carer and display.'
+                        color: 0, 0, 0, 1
+                        background_normal: ""
+                        background_color: (1, 245/255, 254/255, 1)
+                        multiline: True 
+                        size_hint: 0.9, 0.9
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                
+                    MDBoxLayout:
+                        id: table_box
+                        orientation: 'vertical'
+                        size_hint: None, None
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                        height: '0dp'
+                        width: '0dp'
+                    
+                        
+                    MDBoxLayout:
+                        id: map_box
+                        orientation: 'vertical'
+                        size_hint: None, None
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                        height: '0dp'
+                        width: '0dp'
+                    
+                    
+                
+            
+            
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: 0.5, 0.9
+                pos_hint: {'center_x': 0.76, 'center_y': 0.5}
+                
+                MDCard:
+                    size_hint: (0.925, 0.7)
+                    md_bg_color: '#81D4FA'
+                    center_x: 0.5
+                    
+                    MDFloatLayout:
+                        orientation: 'vertical'
+                    
+            
+                        Spinner:
+                            id: carer_select
+                            size_hint: 0.8, 0.8/3
+                            pos_hint: {'center_x': 0.5, 'center_y': 5/6}
+                            text: '4. Select Carer'
+                            values: app.carer_list
+                            background_normal: ""
+                            background_color: (3/255, 169/255, 244/255, 1)
+                            color: (0, 0, 0, 1)
+                            font_size: 24
+                            on_text: 
+                                root.spinner_clicked(carer_select.text)
+                                root.update_display()
+                    
+                    
+                    
+                    
+            
+                        MDBoxLayout:
+                            id: output_type
+                            size_hint: 0.8, 1.8/3
+                            pos_hint: {'center_x': 0.5, 'center_y': 2/6}
+                            orientation: 'vertical'
+                    
+                            MDLabel:
+                                text: "Select how to display carer's schedule."
+                                size_hint: 1, 0.25
+                                halign: 'center'
+                                valign: 'center'
+                
+                            MDGridLayout:
+                                cols: 2
+                                size_hint: 1, 0.75
+                    
+                    
+                                MDLabel:
+                                    text: 'Map'   
+                                    halign: 'center'
+                                MDCheckbox:
+                                    id: display_map
+                                    group: 'output_type'
+                                    on_active: 
+                                        root.checkbox_click(self, self.active, 'Map')
+                                        root.update_display()
+                        
+                                MDLabel:
+                                    text: 'Table'
+                                    halign: 'center'
+                                MDCheckbox:
+                                    id: display_table
+                                    group: 'output_type'
+                                    on_active: 
+                                        root.checkbox_click(self, self.active, 'Table')
+                                        root.update_display()
+                            
+                    
+                                MDLabel:
+                                    text: 'Text'
+                                    halign: 'center'
+                                MDCheckbox:
+                                    id: display_text
+                                    group: 'output_type'
+                                    on_active: 
+                                        root.checkbox_click(self, self.active, 'Text')
+                                        root.update_display()
+                
+                MDCard:
+                    size_hint: (0.925, 0.05)
+                    center_x: 0.5
+                    md_bg_color: '#01579B'
+                    
+                
+                
+                MDCard:
+                    size_hint: (0.925, 0.25)
+                    md_bg_color: '#81D4FA'
+                    center_x: 0.5
+        
+                    MDFillRoundFlatButton: 
+                        text: 'Return to Overview'
+                        md_bg_color: '#0277BD'
+                        font_size: 24
+                        size_hint: (0.8, 0.8)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                        on_release:
+                            app.root.current = 'first'
+                            root.manager.transition.direction = 'down'
+                            
+        MDFloatLayout:
+            size_hint: 1, 0.3
+            orientation: 'vertical'
+        
+            MDCard:
+                size_hint: (0.94, 0.9)
+                pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+                md_bg_color: '#81D4FA'
+        
+                MDFloatLayout:
+                    size_hint: 0.8, 0.8
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    
+                    MDTextField:
+                        mode: 'fill'
+                        id: new_start
+                        multiline: False
+                        hint_text: 'Enter new start time'
+                        size_hint: 0.4, 0.4
+                        pos_hint: {'center_x': 0.25, 'center_y': 0.75}
+                    
+                    MDTextField:
+                        mode: 'fill'
+                        id: new_end
+                        multiline: False
+                        hint_text: 'Enter new end time'
+                        size_hint: 0.4, 0.4
+                        pos_hint: {'center_x': 0.75, 'center_y': 0.75}
+                
+                    MDTextField:
+                        mode: 'fill'
+                        id: new_workhours
+                        multiline: False
+                        hint_text: 'Enter number of work hours \n(0 if unavailable)'
+                        size_hint: 0.4, 0.4
+                        pos_hint: {'center_x': 0.25, 'center_y': 0.25}
+                
+                    MDFillRoundFlatButton: 
+                        id: label_reschedule
+                        text: 'Adjust schedule \nfor 1'
+                        font_size: 24
+                        on_press:
+                            root.reschedule()     
+                        size_hint: 0.4, 0.4   
+                        pos_hint: {'center_x': 0.75, 'center_y': 0.25}
+                        
+    
+
+    
+    
+    
+
+<ClientWindow>:
+    name: 'client_window'
+    id: client_window
+    
+    client_select: client_select
+    instructions_cl: instructions_cl
+    instructions_cl_text: instructions_cl_text
+    table_box_cl: table_box_cl
+    label_reschedule_cl: label_reschedule_cl
+    
+    early_morning: early_morning
+    morning: morning
+    lunch: lunch
+    afternoon: afternoon
+    evening: evening
+    
+    btn_reschedule_cl: btn_reschedule_cl
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+        md_bg_color: '#01579B'
+    
+        MDFloatLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.75
+            
+            MDFloatLayout:
+                orientation: 'vertical'
+                size_hint: 0.5, 0.9
+                pos_hint: {'center_x': 0.265, 'center_y': 0.5}
+        
+                MDCard:
+                    id: instructions_cl
+                    size_hint: (0.9, 1)
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    md_bg_color: '#81D4FA'
+                    
+                    TextInput:
+                        id: instructions_cl_text
+                        text: 'Select client and display.'
+                        color: 0, 0, 0, 1
+                        background_normal: ""
+                        background_color: (1, 245/255, 254/255, 1)
+                        multiline: True 
+                        size_hint: 0.9, 0.9
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    
+                    
+                    MDBoxLayout:
+                        id: table_box_cl
+                        orientation: 'vertical'
+                        size_hint: None, None
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                        height: '0dp'
+                        width: '0dp'   
+            
+            
+            
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: 0.5, 0.9
+                pos_hint: {'center_x': 0.765, 'center_y': 0.5}
+                
+                MDCard:
+                    size_hint: (0.9, 0.9)
+                    md_bg_color: '#81D4FA'
+                    center_x: 0.5
+                    
+                    MDFloatLayout:
+                        orientation: 'vertical'
+            
+                        Spinner:
+                            id: client_select
+                            size_hint: 0.9, 0.2
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.875}
+                            text: '4. Select Client'
+                            values: app.client_list
+                            background_normal: ""
+                            background_color: (3/255, 169/255, 244/255, 1)
+                            color: (0, 0, 0, 1)
+                            font_size: 24
+                            on_text: 
+                                root.spinner_clicked(client_select.text)
+                                root.update_display()
+                            
+                
+                        MDBoxLayout:
+                            size_hint: 0.9, 0.5
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                            orientation: 'vertical'
+                    
+                            MDLabel:
+                                id: label_reschedule_cl
+                                text: "Client's Visits:"
+                                size_hint: 1, 1/6
+                                valign: 'center'
+                                halign: 'center'
+                        
+                            MDGridLayout:
+                                cols: 2
+                                size_hint: 1, 5/6
+                        
+                                MDCheckbox:
+                                    id: early_morning
+                                    active: root.active_early_morning
+                                    on_active: root.selectbox_click(self, self.active, "Early Morning")
+                            
+                                MDLabel:
+                                    halign: 'center'
+                                    valign: 'center'
+                                    text: 'Early Morning'
+                                
+                            
+                                MDCheckbox:
+                                    id: morning
+                                    active: root.active_morning
+                                    on_active: root.selectbox_click(self, self.active, "Morning")
+                            
+                                MDLabel:
+                                    halign: 'center'
+                                    valign: 'center'
+                                    text: 'Morning'
+                            
+                        
+                                MDCheckbox:
+                                    id: lunch
+                                    active: root.active_lunch
+                                    on_active: root.selectbox_click(self, self.active, "Lunch")
+                            
+                                MDLabel:
+                                    halign: 'center'
+                                    valign: 'center'
+                                    text: 'Lunch'
+                            
+                                MDCheckbox:
+                                    id: afternoon
+                                    active: root.active_afternoon
+                                    on_active: root.selectbox_click(self, self.active, "Tea")
+                            
+                                MDLabel:
+                                    halign: 'center'
+                                    valign: 'center'
+                                    text: 'Afternoon'
+                            
+                                MDCheckbox:
+                                    id: evening
+                                    active: root.active_evening
+                                    on_active: root.selectbox_click(self, self.active, "Evening")
+                            
+                                MDLabel:
+                                    halign: 'center'
+                                    valign: 'center'
+                                    text: 'Evening'
+                        
+                    
+                        MDFillRoundFlatButton: 
+                            size_hint: 0.9, 0.2
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.125}
+                            id: btn_reschedule_cl
+                            font_size: 24
+                            text: 'Adjust Availability'
+                            on_press:
+                                root.reschedule()
+        
+        
+        
+        
+        
+        
+        MDFloatLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.25
+            
+            MDCard:
+                size_hint: (0.55, 0.95)
+                pos_hint: {'center_x': 0.317, 'center_y': 0.6}
+                md_bg_color: '#81D4FA'
+            
+                MDBoxLayout:
+                    id: output_type_cl
+                    size_hint: 0.9, 0.9
+                    orientation: 'horizontal'
+            
+                    MDLabel:
+                        halign: 'center'
+                        valign: 'center'
+                        text: "Select how to \ndisplay client's schedule:"
+                        size_hint: 0.5, 1
+            
+                    MDGridLayout:
+                        cols: 2
+                        size_hint: 0.5, 1
+                
+                    
+                        MDCheckbox:
+                            id: display_table_cl
+                            group: 'output_type_cl'
+                            on_active: 
+                                root.checkbox_click(self, self.active, 'Table')
+                                root.update_display()
+                        MDLabel:
+                            text: 'Table'   
+                
+                    
+                        MDCheckbox:
+                            id: display_text_cl
+                            group: 'output_type_cl'
+                            on_active: 
+                                root.checkbox_click(self, self.active, 'Text')
+                                root.update_display()
+                        MDLabel:
+                            text: 'Text'
+            
+            MDCard:
+                size_hint: (0.35, 0.95)
+                pos_hint: {'center_x': 0.79, 'center_y': 0.6}
+                md_bg_color: '#81D4FA'
+            
+                MDFillRoundFlatButton: 
+                    text: 'Return to Overview'
+                    font_size: 24
+                    size_hint: 0.8, 0.7
+                    md_bg_color: '#0277BD'
+                    pos_hint: {'center_x': 0.6, 'center_y': 0.5}
+                    on_release:
+                        app.root.current = 'first'
+                        root.manager.transition.direction = 'down'
+                
+               
